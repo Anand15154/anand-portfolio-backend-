@@ -27,7 +27,7 @@ func LoadConfig() *Config {
 		log.Println("No .env file found, using environment variables")
 	}
 
-	return &Config{
+	config := &Config{
 		Port:            getEnv("PORT", "8080"),
 		GinMode:         getEnv("GIN_MODE", "debug"),
 		MongoDBURI:      getEnv("MONGODB_URI", "mongodb://localhost:27017"),
@@ -40,6 +40,26 @@ func LoadConfig() *Config {
 		SMTPUsername:    getEnv("SMTP_USERNAME", ""),
 		SMTPPassword:    getEnv("SMTP_PASSWORD", ""),
 	}
+
+	// Log configuration for debugging (without sensitive data)
+	log.Printf("Configuration loaded:")
+	log.Printf("  Port: %s", config.Port)
+	log.Printf("  Gin Mode: %s", config.GinMode)
+	log.Printf("  MongoDB Database: %s", config.MongoDBDatabase)
+	log.Printf("  JWT Expiry: %s", config.JWTExpiry)
+	log.Printf("  Allowed Origins: %s", config.AllowedOrigins)
+
+	// Log MongoDB URI status (without exposing the actual URI)
+	if config.MongoDBURI == "mongodb://localhost:27017" {
+		log.Printf("  MongoDB URI: Using default localhost (MONGODB_URI not set)")
+	} else {
+		log.Printf("  MongoDB URI: Custom URI configured")
+	}
+
+	// Validate required configuration
+	validateConfig(config)
+
+	return config
 }
 
 func getEnv(key, defaultValue string) string {
@@ -47,4 +67,19 @@ func getEnv(key, defaultValue string) string {
 		return value
 	}
 	return defaultValue
+}
+
+func validateConfig(config *Config) {
+	// Check for critical configuration issues
+	if config.MongoDBURI == "mongodb://localhost:27017" {
+		log.Println("⚠️  WARNING: Using default MongoDB URI (localhost). Set MONGODB_URI environment variable for production.")
+	}
+
+	if config.JWTSecret == "your-super-secret-jwt-key-here" {
+		log.Println("⚠️  WARNING: Using default JWT secret. Set JWT_SECRET environment variable for production.")
+	}
+
+	if config.GinMode == "debug" {
+		log.Println("ℹ️  INFO: Running in debug mode. Set GIN_MODE=release for production.")
+	}
 }

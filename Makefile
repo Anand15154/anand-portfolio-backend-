@@ -1,6 +1,6 @@
 # Makefile for Portfolio Backend
 
-.PHONY: help build run test clean docker-build docker-run docker-stop deps lint format init-atlas
+.PHONY: help build run test clean docker-build docker-run docker-stop deps lint format init-atlas check-env
 
 # Default target
 help:
@@ -16,6 +16,7 @@ help:
 	@echo "  docker-run   - Run with Docker Compose"
 	@echo "  docker-stop  - Stop Docker containers"
 	@echo "  init-atlas   - Initialize MongoDB Atlas database"
+	@echo "  check-env    - Check environment variables"
 
 # Build the application
 build:
@@ -79,6 +80,11 @@ init-atlas:
 	fi
 	@echo "Running database initialization script..."
 	npm run init-db
+
+# Check environment variables
+check-env:
+	@echo "Checking environment variables..."
+	go run scripts/check-env.go
 
 # Install development tools
 install-tools:
