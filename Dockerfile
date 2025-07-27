@@ -29,8 +29,9 @@ RUN apk --no-cache add ca-certificates
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
 
-# Set working directory
-WORKDIR /root/
+# Create app directory and set working directory
+RUN mkdir -p /app
+WORKDIR /app
 
 # Copy binary from builder stage
 COPY --from=builder /app/main .
