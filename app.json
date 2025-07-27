@@ -1,0 +1,38 @@
+{
+    "name": "portfolio-backend",
+    "description": "Portfolio backend API",
+    "repository": "https://github.com/yourusername/anand-portfolio",
+    "keywords": [
+        "go",
+        "gin",
+        "mongodb",
+        "portfolio"
+    ],
+    "env": {
+        "MONGODB_URI": {
+            "description": "MongoDB Atlas connection string",
+            "required": true
+        },
+        "MONGODB_DATABASE": {
+            "description": "MongoDB database name",
+            "value": "portfolio_db"
+        },
+        "JWT_SECRET": {
+            "description": "JWT secret key",
+            "required": true
+        },
+        "GIN_MODE": {
+            "description": "Gin mode",
+            "value": "release"
+        },
+        "ALLOWED_ORIGINS": {
+            "description": "Comma-separated list of allowed origins",
+            "required": true
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/go"
+        }
+    ]
+}

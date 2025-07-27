@@ -1,0 +1,21 @@
+{
+    "name": "portfolio-backend-init",
+    "version": "1.0.0",
+    "description": "MongoDB Atlas initialization script for portfolio backend",
+    "main": "init-atlas-db.js",
+    "scripts": {
+        "init-db": "node init-atlas-db.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "mongodb",
+        "atlas",
+        "portfolio",
+        "backend"
+    ],
+    "author": "Anand Tiwari",
+    "license": "MIT",
+    "dependencies": {
+        "mongodb": "^5.0.0"
+    }
+}
